@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "name": "@types/tryghost__admin-api",
+    "version": "1.13.9999",
+    "projects": [
+        "https://github.com/TryGhost/SDK"
+    ],
+    "dependencies": {
+        "@types/jsonwebtoken": "^9.0.0",
+        "form-data": "^4.0.0"
+    },
+    "devDependencies": {
+        "@definitelytyped/dtslint": "^0.2.23",
+        "@types/tryghost__admin-api": "workspace:."
+    },
+    "owners": [
+        {
+            "name": "Mike Gillis",
+            "githubUsername": "mgillis"
+        }
+    ]
+}
