@@ -12,20 +12,23 @@ interface Config {
     makeRequest: (options: { url: string; method: string; data: any; params?: any; headers?: any }) => Promise<any>;
 }
 
-type Options = (
-    | {
-          url: string;
-      }
-    | {
-          /**
-           * @deprecated use "url" instead
-           */
-          host: string;
-      }
-) & {
-    version: string | boolean;
-    key: string;
-} & Partial<Pick<Config, "ghostPath" | "userAgent" | "generateToken" | "makeRequest">>;
+type Options =
+    & (
+        | {
+            url: string;
+        }
+        | {
+            /**
+             * @deprecated use "url" instead
+             */
+            host: string;
+        }
+    )
+    & {
+        version: string | boolean;
+        key: string;
+    }
+    & Partial<Pick<Config, "ghostPath" | "userAgent" | "generateToken" | "makeRequest">>;
 
 interface BasicQueryParams {
     include?: string;
@@ -43,13 +46,13 @@ interface StandardEndpoints<T, Q, R = T & { meta: any }> {
     browse: (options?: BrowseQueryParams & Q) => Promise<R[]>;
     read: (
         data: Partial<T> & ({ id: string } | { email: string } | { slug: string }),
-        queryParams?: BasicQueryParams
+        queryParams?: BasicQueryParams,
     ) => Promise<R>;
     add: (data: Partial<T>, queryParams?: BasicQueryParams & Q) => Promise<R>;
     edit: (data: Partial<T> & { id: string }, queryParams?: BasicQueryParams & Q) => Promise<R>;
     delete: (
         data: Partial<T> & ({ id: string } | { email: string }),
-        queryParams?: BasicQueryParams & Q
+        queryParams?: BasicQueryParams & Q,
     ) => Promise<any>;
 }
 
@@ -395,7 +398,7 @@ interface GhostAdmin {
     newsletters: Omit<StandardEndpoints<Newsletter, {}>, "add"> & {
         add: (
             data: Partial<Newsletter>,
-            queryParams?: BasicQueryParams & { opt_in_existing?: boolean }
+            queryParams?: BasicQueryParams & { opt_in_existing?: boolean },
         ) => Promise<Newsletter>;
     };
     // tiers: StandardEndpoints<Tier, {}>; -- in API but not in JS
@@ -405,10 +408,10 @@ interface GhostAdmin {
             data:
                 | FormData
                 | {
-                      file: string;
-                      ref?: string;
-                      purpose?: "image" | "profile_image" | "icon";
-                  }
+                    file: string;
+                    ref?: string;
+                    purpose?: "image" | "profile_image" | "icon";
+                },
         ) => Promise<Image>;
     };
     media: {
@@ -427,7 +430,7 @@ interface GhostAdmin {
 
 declare var GhostAdminAPI: {
     (options: Options): GhostAdmin;
-    new (options: Options): GhostAdmin;
+    new(options: Options): GhostAdmin;
 };
 
 export = GhostAdminAPI;

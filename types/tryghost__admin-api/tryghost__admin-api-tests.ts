@@ -10,7 +10,7 @@ const api = new GhostAdminAPI({
 api.posts.add({
     title: "My first draft API post",
     lexical:
-        '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hello, beautiful world! 👋","type":"extended-text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+        "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Hello, beautiful world! 👋\",\"type\":\"extended-text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}",
 });
 
 // Browsing posts returns Promise([Post...]);
@@ -67,7 +67,7 @@ function processImagesInHTML(html: string) {
             api.images.upload({
                 ref: file,
                 file: path.resolve(file),
-            })
+            }),
         );
     }
 
@@ -79,14 +79,14 @@ function processImagesInHTML(html: string) {
 
 // Your content
 let html =
-    '<p>My test post content.</p><figure><img src="/path/to/my/image.jpg" /><figcaption>My awesome photo</figcaption></figure>';
+    "<p>My test post content.</p><figure><img src=\"/path/to/my/image.jpg\" /><figcaption>My awesome photo</figcaption></figure>";
 
 processImagesInHTML(html)
     .then((html) => {
         return api.posts
             .add(
                 { title: "My Test Post", html },
-                { source: "html" } // Tell the API to use HTML as the content source, instead of Lexical
+                { source: "html" }, // Tell the API to use HTML as the content source, instead of Lexical
             )
             .then((res) => console.log(JSON.stringify(res)))
             .catch((err) => console.log(err));
